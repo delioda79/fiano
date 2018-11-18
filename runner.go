@@ -1,6 +1,9 @@
 package fiano
 
-import "net/http"
+import (
+	"log"
+	"net/http"
+)
 
 type Runner struct {
 	hdl http.Handler
@@ -12,4 +15,10 @@ func (rn *Runner) AddHandler(hdl Handler) {
 		rn.hdl.ServeHTTP(w, r)
 		hdl.ServeHTTP(w, r)
 	})
+}
+
+// Run runs the server
+func (rn *Runner) Run(addr string) {
+	http.Handle("/", rn.hdl)
+	log.Fatal(http.ListenAndServe(addr, nil))
 }
