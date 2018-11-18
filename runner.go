@@ -11,6 +11,11 @@ type Runner struct {
 
 // AddHandler adds a new handler to the list
 func (rn *Runner) AddHandler(hdl Handler) {
+
+	if rn.hdl == nil {
+		rn.hdl = hdl
+		return
+	}
 	old := rn.hdl
 	rn.hdl = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		old.ServeHTTP(w, r)
