@@ -23,3 +23,7 @@ func (hd Handler) ServeStatic(path string) {
 		w.Write(cnt)
 	})
 }
+
+func NewHandler(r *mux.Router) *Handler {
+	return &Handler{r}
+}
